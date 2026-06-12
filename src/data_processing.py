@@ -4,6 +4,32 @@ import seaborn as sns
 import math
 from sklearn.preprocessing import StandardScaler
 
+def missing_values_report(df):
+    """
+    Display missing value counts and percentages.
+    """
+
+    missing_count = df.isnull().sum()
+
+    missing_percent = (
+        df.isnull().sum() /
+        len(df)
+    ) * 100
+
+    report = pd.DataFrame({
+        "Missing Count": missing_count,
+        "Missing Percentage": missing_percent
+    })
+
+    report = report[
+        report["Missing Count"] > 0
+    ].sort_values(
+        by="Missing Percentage",
+        ascending=False
+    )
+
+    return report
+
 def handle_missing_values(
     df,
     numerical_cols=None,
