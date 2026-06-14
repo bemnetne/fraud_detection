@@ -5,7 +5,8 @@ from sklearn.metrics import (
     average_precision_score,
     f1_score,
     confusion_matrix,
-    classification_report
+    classification_report,
+    precision_score
 )
 
 def drop_unused_columns(df, columns_to_drop):
@@ -117,17 +118,22 @@ def evaluate_model(model, X_test, y_test):
         y_test,
         y_pred
     )
+    ps = precision_score(
+            y_test,
+            y_pred
+        )
 
     print(f"AUC-PR : {auc_pr:.4f}")
     print(f"F1-Score: {f1:.4f}")
     print("\nConfusion Matrix")
     print(cm)
-
+    print(ps)
     print("\nClassification Report")
     print(classification_report(y_test, y_pred))
 
     return {
         "AUC-PR": auc_pr,
         "F1-Score": f1,
-        "Confusion Matrix": cm
+        "Confusion Matrix": cm,
+        "Precision":ps
     }
